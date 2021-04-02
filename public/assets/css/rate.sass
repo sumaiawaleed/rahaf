@@ -1,0 +1,31 @@
+
+.star-rating {
+    font-size: 15vw;
+
+    label:hover,
+    input:checked ~ label,
+    input:focus ~ label {
+        color: red;
+
+        & ~ label { color: red; }
+}
+}
+
+label { cursor: pointer; }
+
+body {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+}
+
+.sr-only {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    min-width: 0;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
