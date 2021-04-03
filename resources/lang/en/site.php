@@ -253,7 +253,7 @@ return [
     'add_ads' => 'Add Ad',
     'ad' => 'Ad',
     'edit_ads' => 'edit ad',
-    'less_7' => 'less than 7',
+    'less_7' => 'less than ',
     'pages' => 'pages',
     'add_pages' => 'Add page',
     'edit_pages' => 'Edit page',

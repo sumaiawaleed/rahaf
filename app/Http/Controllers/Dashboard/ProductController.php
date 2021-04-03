@@ -12,6 +12,7 @@ use App\OrderDetails;
 use App\Product;
 use App\Quantity;
 use App\SubCategory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -73,28 +74,41 @@ class ProductController extends Controller
     {
         $data['title'] = __('site.products');
         $data['products'] = Product::when($request->search, function ($q) use ($request) {
+            Cache::put('search', $request->search, $seconds = 60*24*30);
 
             return $q->where('name','LIKE' ,'%' . $request->search . '%')
                 ->orWhere('a_name','LIKE' ,'%' . $request->search . '%');
 
         })->when($request->cat_id,function ($q) use ($request){
+            Cache::put('category', $request->cat_id, $seconds = 60*24*30);
             return $q->where('cat_id',$request->cat_id);
         })->when($request->q,function ($q) use ($request){
             if($request->q){
-                return $q->where('quantity','<',7);
+                Cache::put('quantity', $request->q, $seconds = 60*24*30);
+                return $q->where('quantity','<',$request->q);
             }
         })->when($request->status,function ($q) use ($request){
             if($request->status == 1 or $request->status == 2){
+                Cache::put('status', $request->status, $seconds = 60*24*30);
+
                 return $q->where('available',($request->status == 1 ? 1 : 0));
             }
         })->when($request->brand_id,function ($q) use ($request){
-                return $q->where('brand_id',$request->brand_id);
+            Cache::put('brand', $request->brand, $seconds = 60*24*30);
+
+            return $q->where('brand_id',$request->brand_id);
         })->when($request->available,function ($q) use ($request){
-                return $q->where('available',1);
+            Cache::put('available', $request->available, $seconds = 60*24*30);
+
+            return $q->where('available',1);
         })->when($request->sku,function ($q) use ($request){
-                return $q->where('sku','LIKE' ,'%' . $request->sku . '%');
+            Cache::put('sku', $request->sku, $seconds = 60*24*30);
+
+            return $q->where('sku','LIKE' ,'%' . $request->sku . '%');
         })->when($request->var_type,function ($q) use ($request){
-                if($request->var_type == 1 or $request->var_type == 2)
+            Cache::put('var_type', $request->var_type, $seconds = 60*24*30);
+
+            if($request->var_type == 1 or $request->var_type == 2)
                     return $q->where('var_type',$request->var_type);
         })->orderBy('sku')
             ->orderByDesc('id')
@@ -104,6 +118,9 @@ class ProductController extends Controller
             $product->orders  = OrderDetails::where('product_id',$product->id)->get()->count();
             $product->favorites  = Favourite::where('product_id',$product->id)->get()->count();
         }
+
+        Cache::put('page',$request->page);
+
         $data['url'] = route(env('DASH_URL') . '.products.index');
         $data['categories'] = Category::all();
 

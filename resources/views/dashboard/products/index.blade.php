@@ -133,7 +133,7 @@
                                 <div class="col-xl-12 col-lg lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="form-group">
                                         <label>@lang('site.name')</label>
-                                        <input value="{{ $request->search }}" name="search" type="text"
+                                        <input value="{{ \Illuminate\Support\Facades\Cache::get('search') }}" name="search" type="text"
                                                class="form-control" placeholder="@lang('site.search')">
                                     </div>
                                 </div>
@@ -141,7 +141,7 @@
                                 <div class="col-xl-4 col-lglg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="sku">sku</label>
-                                        <input value="{{ $request->sku }}" name="sku" type="text" class="form-control"
+                                        <input  value="{{ \Illuminate\Support\Facades\Cache::get('sku') }}" name="sku" type="text" class="form-control"
                                                placeholder="sku"></div>
                                 </div>
 
@@ -151,11 +151,11 @@
                                         <label for="inputName">@lang('site.status')</label>
                                     </div>
                                     <div class="col-6">
-                                        <input type="radio" {{ $request->status == 1 ? "checked" : "" }} name="status"
+                                        <input {{ \Illuminate\Support\Facades\Cache::get('status') == 1 ? "checked" : "" }} type="radio" {{ $request->status == 1 ? "checked" : "" }} name="status"
                                                value="1">متاح
                                     </div>
                                     <div class="col-6">
-                                        <input type="radio" {{ $request->status == 2 ? "checked" : "" }} name="status"
+                                        <input {{ \Illuminate\Support\Facades\Cache::get('status') == 2 ? "checked" : "" }} type="radio" {{ $request->status == 2 ? "checked" : "" }} name="status"
                                                value="2">غير متاح
                                     </div>
                                 </div>
@@ -166,15 +166,15 @@
                                         <label for="inputName">@lang('site.var_type')</label>
                                     </div>
                                     <div class="col-4">
-                                        <input type="radio" {{ $request->var_type == 1 ? "checked" : "" }} name="var_type"
+                                        <input {{ \Illuminate\Support\Facades\Cache::get('var_type') == 1 ? "checked" : "" }} type="radio" name="var_type"
                                                value="1">@lang('site.color')
                                     </div>
                                     <div class="col-4">
-                                        <input type="radio" {{ $request->var_type == 2 ? "checked" : "" }} name="var_type"
+                                        <input type="radio" {{ \Illuminate\Support\Facades\Cache::get('var_type') == 2 ? "checked" : "" }} name="var_type"
                                                value="2">@lang('site.flever')
                                     </div>
                                     <div class="col-4">
-                                        <input type="radio" {{ $request->var_type == 2 ? "checked" : "" }} name="var_type"
+                                        <input type="radio" {{ \Illuminate\Support\Facades\Cache::get('var_type') == 3 ? "checked" : "" }} name="var_type"
                                                value="3">@lang('site.all')
                                     </div>
                                 </div>
@@ -183,7 +183,7 @@
                                 <div class="col-xl-4 col-lglg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="inputName">@lang('site.less_7')</label>
-                                        <input type="checkbox" name="q" value="1">
+                                        <input value="{{ \Illuminate\Support\Facades\Cache::get('quantity')}}" type="text" name="q" class="form-control">
                                     </div>
                                 </div>
 
