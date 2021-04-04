@@ -7,7 +7,8 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#"><i class="@lang('icons.extras')"></i></a></li>
-                            <li class="breadcrumb-item"><a href="{{ route(env('DASH_URL').'.extras.index',['product_id' => $data['product_id']]) }}">@lang('site.extras')</a>
+                            <li class="breadcrumb-item"><a
+                                    href="{{ route(env('DASH_URL').'.extras.index',['product_id' => $data['product_id']]) }}">@lang('site.extras')</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">{{ $data['title'] }}</li>
                         </ol>
@@ -20,7 +21,8 @@
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form class="edit_new_form" method="post" action="{{ $data['url']   }}" enctype="multipart/form-data">
+                            <form class="edit_new_form" method="post" action="{{ $data['url']   }}"
+                                  enctype="multipart/form-data">
                                 {{ method_field('put') }}
                                 {{ csrf_field() }}
                                 <div class="row">
@@ -39,9 +41,9 @@
                 </div>
             </div>
         </div>
-@endsection
+        @endsection
 
-@push('scripts')
+        @push('scripts')
             <script>
                 $(".image").change(function () {
 
@@ -72,10 +74,10 @@
                         dataType: 'text',
                         processData: false,
                         contentType: false,
-                        beforeSend: function(){
+                        beforeSend: function () {
                             $("#loading-wrapper").show();
                         },
-                        complete: function(){
+                        complete: function () {
                             $("#loading-wrapper").hide();
                         },
                         success: function (data) {
@@ -114,7 +116,14 @@
                     });
                 });
 
+                $('select').selectpicker({
+                    liveSearch: true,
+                });
+
             </script>
 
-    @include('layout.dashboard.partials._load_catgeories')
-@endpush
+            @include('layout.dashboard.partials._load_catgeories')
+            <link rel="stylesheet" href="{{ asset('public/dash_assets/vendor/bs-select/bs-select.css') }}" />
+            <script src="{{ asset('public/dash_assets/vendor/bs-select/bs-select.min.js')}}"></script>
+
+    @endpush

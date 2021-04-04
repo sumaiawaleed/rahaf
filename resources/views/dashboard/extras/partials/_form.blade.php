@@ -10,7 +10,7 @@
         <div class="form-group">
             @if($data['pro']->var_type == 1)
             <label for="color_id_input">@lang('site.color')</label>
-           <select name="color_id" class="form-control" id="color_id_input">
+           <select name="color_id" class="form-control selectpicker" data-show-subtext="true" data-live-search="true" id="color_id_input">
                <option value="">@lang('site.select')</option>
                @foreach($data['colors'] as $color)
                    <option class="text-white" {{ $color_id == $color->id ? "selected" : "" }} style="background: {{ $color->color }}" value="{{ $color->id }}">
@@ -20,10 +20,10 @@
            </select>
             @else
                 <label for="color_id_input">@lang('site.flever')</label>
-                <select name="color_id" class="form-control" id="color_id_input">
+                <select name="color_id" data-live-search="true" data-live-search-style="startsWith" class="selectpicker form-control">
                     <option value="">@lang('site.select')</option>
                     @foreach($data['colors'] as $color)
-                        <option {{ $color_id == $color->id ? "selected" : "" }}  value="{{ $color->id }}">{{ $color->getTranslateName() }}</option>
+                        <option data-tokens="{{ $color->getTranslateName() }}" {{ $color_id == $color->id ? "selected" : "" }}  value="{{ $color->id }}">{{ $color->getTranslateName() }}</option>
                     @endforeach
                 </select>
             @endif

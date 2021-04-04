@@ -41,10 +41,10 @@
                 </div>
             </div>
         </div>
-@endsection
+        @endsection
 
-@push('scripts')
-    @include('layout.dashboard.partials._store_form')
-    @include('layout.dashboard.partials._load_catgeories')
-    @include('dashboard.products.partials._tools')
-@endpush
+        @push('scripts')
+            @include('layout.dashboard.partials._store_form')
+            @include('layout.dashboard.partials._load_catgeories')
+            @include('dashboard.products.partials._tools')
+    @endpush

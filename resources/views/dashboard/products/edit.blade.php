@@ -45,6 +45,9 @@
 
 @push('scripts')
 
+        @include('layout.dashboard.partials._load_catgeories')
+    @include('dashboard.products.partials._tools')
+
             <script>
                 $(".image").change(function () {
 
@@ -100,7 +103,7 @@
                                 let path = main_url.split("/");
                                 var new_path = path.slice(0, -2);
                                 main_url = new_path.join("/")
-                                window.location.replace(main_url+"?page="+{{ \Illuminate\Support\Facades\Cache::get('page') }});
+                                window.location.replace(main_url+"?page="+{{ \Illuminate\Support\Facades\Cache::get('page',0) }});
                             } else {
                                 var errors = result.errors;
                                 var html_errors = '<ul>';
@@ -121,8 +124,5 @@
                 });
 
             </script>
-
-    @include('layout.dashboard.partials._load_catgeories')
-    @include('dashboard.products.partials._tools')
 
 @endpush
