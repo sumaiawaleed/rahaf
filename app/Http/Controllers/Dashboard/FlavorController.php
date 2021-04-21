@@ -39,7 +39,7 @@ class FlavorController extends Controller
 
             return $q->where('name','LIKE' ,'%' . $request->search . '%')
                 ->orWhere('a_name','LIKE' ,'%' . $request->search . '%')
-                ->orWhere('notes','LIKE' ,'%' . $request->notes . '%');
+                ->orWhere('notes','LIKE' ,'%' . $request->search . '%');
 
         })->where('type',2)->latest('id')->paginate(20);
         $data['url'] = route(env('DASH_URL') . '.flavors.index');

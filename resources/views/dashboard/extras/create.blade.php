@@ -123,4 +123,6 @@
     @include('layout.dashboard.partials._load_catgeories')
             <link rel="stylesheet" href="{{ asset('public/dash_assets/vendor/bs-select/bs-select.css') }}" />
             <script src="{{ asset('public/dash_assets/vendor/bs-select/bs-select.min.js')}}"></script>
+
+
     @endpush

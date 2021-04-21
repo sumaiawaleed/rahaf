@@ -38,8 +38,8 @@ class BrandController extends Controller
         $data['title'] = __('site.brands');
         $data['brands'] = Brand::when($request->search, function ($q) use ($request) {
 
-            return $q->where('name','LIKE' ,'%' . $request->search . '%')->orWhere('a_name','LIKE' ,'%' . $request->search . '%');
-
+            return $q->where('name','LIKE' ,'%' . $request->search . '%')
+                ->orWhere('a_name','LIKE' ,'%' . $request->search . '%');
         })->latest('id')->paginate(20);
         $data['url'] = route(env('DASH_URL') . '.brands.index');
         return view('dashboard.brands.index', compact('data'));

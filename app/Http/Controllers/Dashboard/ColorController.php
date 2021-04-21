@@ -37,7 +37,9 @@ class ColorController extends Controller
         $data['title'] = __('site.colors');
         $data['colors'] = Color::when($request->search, function ($q) use ($request) {
 
-            return $q->where('name','LIKE' ,'%' . $request->search . '%')->orWhere('a_name','LIKE' ,'%' . $request->search . '%');
+            return $q->where('name','LIKE' ,'%' . $request->search . '%')
+                ->orWhere('a_name','LIKE' ,'%' . $request->search . '%')
+                ->orWhere('notes','LIKE' ,'%' . $request->search . '%');
 
         })->where('type',1)->latest('id')->paginate(20);
         $data['url'] = route(env('DASH_URL') . '.colors.index');
