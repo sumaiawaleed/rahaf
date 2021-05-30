@@ -6,6 +6,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
     function () {
         Route::prefix(env('DASH_URL'))->name(env('DASH_URL') . '.')->middleware(['auth:__rhs_'])->group(function () {
 
+            Route::get('product/data','ProductController@getAutocompleteData')->name('product.data');
+
             Route::get('home', 'WelcomeController@index')->name('index');
             Route::get('upload_image', 'ProductController@upload_image')->name('upload_image');
 
@@ -18,6 +20,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::resource('sub_categories', 'SubCategoryController')->except(['show']);
 
             Route::resource('brands', 'BrandController')->except(['show']);
+            Route::get('brand/report','BrandController@report')->name('brand.report');
             Route::post('brand/active','BrandController@active')->name('brand.active');
 
             Route::resource('pages', 'PageController')->except(['pages']);
@@ -28,7 +31,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
             Route::get('dollars', 'DollarController@index')->name('dollars');
             Route::put('dollars', 'DollarController@update')->name('dollars');
             Route::resource('drivers', 'DriverController')->except(['show']);
-
+            Route::get('driver/report','DriverController@report')->name('driver.report');
 
             Route::resource('products', 'ProductController');
             Route::get('product/reports','ProductController@reports')->name('product.reports');
@@ -45,6 +48,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['lo
 
             Route::resource('ads', 'AdvertismentController');
             Route::resource('customers', 'CustomerController');
+            Route::get('customer/report','CustomerController@report')->name('customer.report');
             Route::resource('users', 'UserController');
             Route::resource('stores', 'StoreController');
             Route::resource('packages', 'AdPackageController');

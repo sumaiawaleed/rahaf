@@ -50,9 +50,11 @@ return [
     'logo' => 'الشعار',
 
     'status' => 'الحالة',
-    'pending' => 'قيد التنفيذ',
-    'accepted' => 'مقبول',
-    'rejected' => 'مرفوض',
+    'rejected' => 'تم الإلغاء',
+    'pending' => 'تحت المراجعه',
+    'processed' => 'قيد التجهيز',
+    'in_the_way' => 'قيد التوصيل',
+    'received' => 'تم الإستلام',
 
 
 

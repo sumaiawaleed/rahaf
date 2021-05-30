@@ -172,6 +172,8 @@
     })
 </script>
 @stack('scripts')
+
+
 <!-- Main Js Required -->
 <script src="{{ asset('public/dash_assets/js/main.js')}}"></script>
 

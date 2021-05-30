@@ -12,6 +12,10 @@ Route::get('/clear-cache', function () {
     return 'DONE'; //Return anything
 });
 
+
+Route::get('text_notifications/{id}', 'Dashboard\OrderController@test_notification')->name('text_notifications');
+
+
 Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     Auth::routes();
 

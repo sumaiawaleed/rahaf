@@ -26,12 +26,16 @@ class Order extends Model
     protected $appends = ['status_name'];
 
     public function getStatusNameAttribute(){
-        if($this->status == 1)
-            return __('site.done');
-        else if($this->status == 0)
+        if($this->status == 0)
+            return __('site.rejected');
+        else if($this->status == 1)
             return __('site.pending');
         else if($this->status == 2)
-            return __('site.rejected');
+            return __('site.processed');
+        else if($this->status == 3)
+            return __('site.in_the_way');
+        else if($this->status == 4)
+            return __('site.received');
     }
 
     public function get_color(){

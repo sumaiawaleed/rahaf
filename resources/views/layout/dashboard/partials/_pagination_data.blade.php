@@ -36,7 +36,7 @@
 
         var table = $('table').DataTable({
             lengthChange: false,
-            order: [[1, "asc"]],
+            order: [[0, "desc"]],
             buttons: ['copy', 'excel',
                 {
                     extend: 'print',
@@ -50,45 +50,45 @@
                     extend: 'print',
                     exportOptions: {
                         @if(isset($con))
-                        columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12]
-                        @else
-                        columns: ':visible:not(:last-child)'
-                        @endif
+        columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12]
+    @else
+        columns: ':visible:not(:last-child)'
+    @endif
 
-                    },
-                    customize: function (win) {
-                        $(win.document.body)
-                            .css('font-size', '10pt');
-                        $(win.document.body).find('table')
-                            .addClass('compact')
-                            .attr('dir', 'rtl')
-                            .css('font-size', 'inherit');
-                    }
-                },
-                {
-                    extend: 'excelHtml5',
-                    exportOptions: {
-                        @if(isset($con))
-                        columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12]
-                        @else
-                        columns: ':visible:not(:last-child)'
-                        @endif
-                    }
-                }, {
-                    extend: 'colvis',
-                },
-                // {
-                //     text: 'PDF',
-                //     action: function (e, dt, node, config) {
-                //         main_url = String(window.location.href) + '?pdf=true';
-                //         window.location.replace(main_url);
-                //
-                //     }
-                // },
+    },
+        customize: function (win) {
+            $(win.document.body)
+                .css('font-size', '10pt');
+            $(win.document.body).find('table')
+                .addClass('compact')
+                .attr('dir', 'rtl')
+                .css('font-size', 'inherit');
+        }
+    },
+        {
+            extend: 'excelHtml5',
+                exportOptions: {
+        @if(isset($con))
+            columns: [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 12]
+        @else
+            columns: ':visible:not(:last-child)'
+        @endif
+        }
+        }, {
+            extend: 'colvis',
+        },
+        {
+            text: 'PDF',
+                action: function (e, dt, node, config) {
+            main_url = String(window.location.href) + '?pdf=true';
+            window.location.replace(main_url);
+
+        }
+        },
 
 
-            ]
-        });
+    ]
+    });
 
         table.buttons().container()
             .appendTo('#table_data .col-md-6:eq(0)');

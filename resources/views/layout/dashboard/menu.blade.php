@@ -30,13 +30,27 @@
             @endif
 
             @if (auth()->user()->hasPermission('customers-read'))
-                <li class="nav-item">
-                    <a class="nav-link @if(mb_strpos(request()->path(), 'customers') !==false)  active-page @endif"
-                       href="{{ route(env('DASH_URL').'.customers.index')}}">
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link @if(mb_strpos(request()->path(), 'customer') !==false)  active-page @endif dropdown-toggle"
+                       href="#" id="formsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
                         <i class="@lang('icons.customers') nav-icon"></i>
                         @lang('site.customers')
                     </a>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="formsDropdown">
+                        <li>
+                            <a class="dropdown-item"
+                               href="{{ route(env('DASH_URL').'.customers.index') }}">@lang('site.customers')</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               href="{{ route(env('DASH_URL').'.customer.report') }}">@lang('site.reports')</a>
+                        </li>
+
+                    </ul>
                 </li>
+
             @endif
 
 
@@ -64,12 +78,24 @@
             @endif
 
             @if (auth()->user()->hasPermission('drivers-read'))
-                <li class="nav-item">
-                    <a class="nav-link @if(mb_strpos(request()->path(), 'drivers') !==false)  active-page @endif"
-                       href="{{ route(env('DASH_URL').'.drivers.index') }}">
+                <li class="nav-item dropdown">
+                    <a class="nav-link @if(mb_strpos(request()->path(), 'driver') !==false)  active-page @endif dropdown-toggle"
+                       href="#" id="formsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                       aria-expanded="false">
                         <i class="@lang('icons.drivers') nav-icon"></i>
                         @lang('site.drivers')
                     </a>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="formsDropdown">
+                        <li>
+                            <a class="dropdown-item"
+                               href="{{ route(env('DASH_URL').'.drivers.index') }}">@lang('site.drivers')</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               href="{{ route(env('DASH_URL').'.driver.report') }}">@lang('site.reports')</a>
+                        </li>
+
+                    </ul>
                 </li>
             @endif
 
@@ -132,6 +158,10 @@
                         <li>
                             <a class="dropdown-item"
                                href="{{ route(env('DASH_URL').'.brands.index') }}">@lang('site.brands')</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               href="{{ route(env('DASH_URL').'.brand.report') }}">@lang('site.reports')</a>
                         </li>
                     @endif
                     @if (auth()->user()->hasPermission('coupons-read'))

@@ -7,6 +7,7 @@ use App\Favourite;
 use App\Http\Controllers\Controller;
 use App\Product;
 use App\Rating;
+use Elibyy\TCPDF\Facades\TCPDF as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -54,6 +55,30 @@ class CustomerController extends Controller
         return view('dashboard.customer.index',compact('data'));
 
     }
+
+    public function report(Request $request){
+        $data['title'] = __('site.customers');
+        $data['customers'] = Customer::when($request->search, function ($q) use ($request) {
+
+            return $q->where('name', '%' . $request->search . '%');
+
+        })->latest('id')->paginate(20);
+        $data['url'] = route(env('DASH_URL').'.categories.index');
+
+        if($request->pdf){
+            $view = \View::make('dashboard.customers._pdf',compact('data'));
+            $html_content = $view->render();
+            PDF::SetTitle($data['title']);
+            PDF::AddPage();
+            PDF::setRTL(true);
+            PDF::writeHTML($html_content, true, false, true, false, '');
+            // userlist is the name of the PDF downloading
+            PDF::Output(date('Y-m-d', strtotime(now())));
+        }else{
+            return view('dashboard.customers.reports', compact('data','request'));
+        }
+    }
+
 
     public function create(){
         $data['title'] = __('site.add_customer');

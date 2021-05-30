@@ -7,7 +7,8 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#"><i class="@lang('icons.orders')"></i></a></li>
-                            <li class="breadcrumb-item"><a href="{{ route(env('DASH_URL').'.home') }}">@lang('site.home')</a>
+                            <li class="breadcrumb-item"><a
+                                    href="{{ route(env('DASH_URL').'.home') }}">@lang('site.home')</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">@lang('site.orders')</li>
                         </ol>
@@ -26,12 +27,12 @@
                                 <div class="form-inline">
                                     <div class="form-group mx-sm-3 mb-2">
                                         <label for="search" class="sr-only">@lang('site.from')</label>
-                                        <input  name="from_date" type="date" class="form-control">
+                                        <input name="from_date" type="date" class="form-control">
                                     </div>
 
                                     <div class="form-group mx-sm-3 mb-2">
                                         <label for="search" class="sr-only">@lang('site.to')</label>
-                                        <input  name="to_date" type="date" class="form-control">
+                                        <input name="to_date" type="date" class="form-control">
                                     </div>
 
                                     <div class="form-group mx-sm-3 mb-2">
@@ -47,11 +48,9 @@
                                     <div class="form-group mx-sm-3 mb-2">
                                         <label for="search" class="sr-only">@lang('site.status')</label>
                                         <select name="status" class="form-control">
-                                            <option value="">@lang('site.select_status')</option>
-                                            <option value="1">@lang('site.done')</option>
-                                            <option value="0">@lang('site.pending')</option>
-                                            <option value="2">@lang('site.rejected')</option>
-
+                                            @foreach(__('orders') as $index=>$order)
+                                                <option value="{{ $index }}">{{ $order }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
 
@@ -88,31 +87,8 @@
                 @endif
             </div>
         </div>
-@endsection
+        @endsection
 
-@push('scripts')
-            <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css">
-            <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css">
-            <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-            <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-            <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-            <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-            <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-            <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
-            <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
-            <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-            <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script> <script>
-                $(document).ready(function() {
-                    var table = $('#example').DataTable( {
-                        lengthChange: false,
-                        buttons: [ 'copy', 'excel', 'csv', 'pdf', 'colvis' ]
-                    } );
-
-                    table.buttons().container()
-                        .appendTo( '#example_wrapper .col-md-6:eq(0)' );
-                } );
-            </script>
-@endpush
+        @push('scripts')
+           @include('layout.dashboard.partials._pagination')
+    @endpush

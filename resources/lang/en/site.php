@@ -63,10 +63,13 @@ return [
     'total_ads' => 'Total Ads',
     'days' => 'Days',
     'fees' => 'Fees',
-    'status' => 'Status',
-    'pending' => 'pending',
-    'accepted' => 'accepted',
+
+    'status' => 'status',
     'rejected' => 'rejected',
+    'pending' => 'pending',
+    'processed' => 'processed',
+    'in_the_way' => 'in the way',
+    'received' => 'received',
 
     'ar' => [
         'name' => 'Arabic Name',
@@ -157,8 +160,7 @@ return [
     'driver' => 'Driver',
     'other' => 'Other',
     'done' => 'Done',
-    'pending' => 'Pending',
-    'rejected' => 'Rejected',
+
     'quantity' => 'quantity',
     'sub_quantity' => 'quantity name',
     'product' => 'product',
@@ -282,6 +284,11 @@ return [
     'add_flavors' => 'Add Flavor',
     'edit_flavors' => 'Edit Flavor',
     'all' => 'All',
+
+
+    'not_exist' => 'not exist',
+    'delivery' => 'delivery',
+    'value' => 'value',
 
 
 ];

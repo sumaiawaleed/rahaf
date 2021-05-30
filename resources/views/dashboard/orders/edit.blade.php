@@ -48,6 +48,15 @@
                $user_log = isset($form_data) ?  $form_data->user_log : env('PLNG');
             @endphp
             <script>
+                function check_driver(id){
+                    if(id > 1){
+                        $('#driver_id_group').removeClass('d-none');
+                        $('#driver_id_group').addClass('d-block');
+                    }else{
+                        $('#driver_id_group').addClass('d-none');
+                        $('#driver_id_group').removeClass('d-block');
+                    }
+                }
                 function initMap() {
                     var myLatlng = {lat: {{  $user_lat }}, lng: {{ $user_log }}};
 

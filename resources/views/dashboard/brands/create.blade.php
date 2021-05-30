@@ -7,7 +7,8 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="#"><i class="@lang('icons.brands')"></i></a></li>
-                            <li class="breadcrumb-item"><a href="{{ route(env('DASH_URL').'.brands.index') }}">@lang('site.brands')</a>
+                            <li class="breadcrumb-item"><a
+                                    href="{{ route(env('DASH_URL').'.brands.index') }}">@lang('site.brands')</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">{{ $data['title'] }}</li>
                         </ol>
@@ -20,7 +21,8 @@
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="card">
                         <div class="card-body">
-                            <form class="add_new_form" method="post" action="{{ $data['url']   }}" enctype="multipart/form-data">
+                            <form class="add_new_form" method="post" action="{{ $data['url']   }}"
+                                  enctype="multipart/form-data">
                                 {{ method_field('post') }}
                                 {{ csrf_field() }}
                                 @include('dashboard.brands.partials._form')
@@ -37,8 +39,9 @@
                 </div>
             </div>
         </div>
-@endsection
+        @endsection
 
-@push('scripts')
-    @include('layout.dashboard.partials._store_form')
-@endpush
+        @push('scripts')
+            @include('layout.dashboard.partials._store_form')
+
+    @endpush

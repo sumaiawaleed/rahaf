@@ -1,14 +1,13 @@
 <table class="table" id="table_data">
     <thead>
-    <tr>
+    <tr @isset($pdf) style="background-color:#f2f2f2" @endisset>
         <th>#</th>
         <th>sku</th>
         <th>@lang('site.name')</th>
         <th>@lang('site.categories')</th>
-        {{--        <th>@lang('site.favorites')</th>--}}
-        {{--        <th>@lang('site.orders')</th>--}}
-        <th>@lang('site.available')</th>
+        <th>@lang('site.type')</th>
         <th>@lang('site.quantity')</th>
+        <th>@lang('site.available')</th>
         <th>@lang('site.is_belong')</th>
         <th>@lang('site.extra')</th>
         <th>@lang('site.icon')</th>
@@ -17,30 +16,35 @@
     </thead>
     <tbody>
     @foreach($data['products'] as $index=>$product)
-        <tr>
+        <tr @isset($pdf) style="height: 150px; background-color:{{ ($index% 2 == 0) ? "#fff" : "#f2f2f2" }}" @endisset>
             <td>{{ $product->id }}</td>
             <td>{{ $product->sku }}</td>
             <td>
-                {{ $product->getTranslateName(app()->getLocale()) }}
+                <a href="{{ route(env('DASH_URL').'.products.show',$product->id) }}">
+                    {{ $product->getTranslateName(app()->getLocale()) }} ({{ $product->price }})
+                </a>
             </td>
             <td>
                 {{ $product->category_name }}
             </td>
 
-            {{--            <td>--}}
-            {{--                <a href="{{ route(env('DASH_URL').'.favourites.index',['product_id' => $product->id]) }}">--}}
-            {{--                    {{ $product->favorites }}--}}
-            {{--                </a>--}}
-            {{--            </td>--}}
+            <td>
+                @if($product->ProductExtras())
+                    <ul>
+                        @foreach($product->ProductExtras() as $extra)
+                            <li>{{ $extra->color->name.' ('.$extra->quantity.' ) ' }}</li>
+                        @endforeach
+                    </ul>
+                @else
+                    -
+                @endif
+            </td>
 
-            {{--            <td>--}}
-            {{--                <a href="{{ route(env('DASH_URL').'.orders.index',['product_id' => $product->id]) }}">--}}
-            {{--                    {{ $product->orders }}--}}
-            {{--                </a>--}}
-            {{--            </td>--}}
+            <td>
+                {{ $product->quantity }} <br> @lang('site.total'): {{ $product->getTotal() }}
+            </td>
 
             <td> {{ $product->available == 1 ?  __('site.yes') : __('site.no') }}</td>
-            <td> {{ $product->getTotal() }}</td>
             <td> {{ $product->is_belong == 1 ? __('site.yes') : __('site.no') }}</td>
 
             <td>

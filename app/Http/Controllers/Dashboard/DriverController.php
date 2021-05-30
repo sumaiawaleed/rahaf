@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Driver;
 use App\Http\Controllers\Controller;
+use App\Order;
+use Elibyy\TCPDF\Facades\TCPDF as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -31,6 +33,8 @@ class DriverController extends Controller
 
     }
 
+
+
     public function index(Request $request)
     {
         $data['title'] = __('site.drivers');
@@ -38,9 +42,44 @@ class DriverController extends Controller
 
             return $q->where('name','LIKE' ,'%' . $request->search . '%');
 
+        })->when($request->from,function ($q) use ($request){
+            return $q->whereIn('id',Order::whereDate('date','>',date('Y-m-d',strtotime($request->from)))->get()->pluck('driver_id')->toArray());
+        })->when($request->to,function ($q) use ($request){
+            return $q->whereIn('id',Order::whereDate('date','<',date('Y-m-d',strtotime($request->to)))->get()->pluck('driver_id')->toArray());
         })->latest('id')->paginate(20);
         $data['url'] = route(env('DASH_URL') . '.drivers.index');
-        return view('dashboard.drivers.index', compact('data'));
+        return view('dashboard.drivers.index', compact('data','request'));
+    }
+
+    public function report(Request $request){
+        $data['title'] = __('site.drivers');
+        $data['drivers'] = Driver::when($request->search, function ($q) use ($request) {
+
+            return $q->where('name','LIKE' ,'%' . $request->search . '%');
+
+        })->when($request->from,function ($q) use ($request){
+            return $q->whereIn('id',Order::whereDate('date','>',date('Y-m-d',strtotime($request->from)))->get()->pluck('driver_id')->toArray());
+        })->when($request->to,function ($q) use ($request){
+            return $q->whereIn('id',Order::whereDate('date','<',date('Y-m-d',strtotime($request->to)))->get()->pluck('driver_id')->toArray());
+        })->latest('id')->get();
+        $data['url'] = route(env('DASH_URL') . '.drivers.index');
+
+
+        foreach ($data['drivers'] as $d){
+            $d->orders = Order::where('driver_id',$d->id)->get()->count();
+        }
+        if($request->pdf){
+            $view = \View::make('dashboard.drivers._pdf',compact('data'));
+            $html_content = $view->render();
+            PDF::SetTitle($data['title']);
+            PDF::AddPage();
+            PDF::setRTL(true);
+            PDF::writeHTML($html_content, true, false, true, false, '');
+            // userlist is the name of the PDF downloading
+            PDF::Output(date('Y-m-d', strtotime(now())));
+        }else{
+            return view('dashboard.drivers.reports', compact('data','request'));
+        }
     }
 
     public function create()

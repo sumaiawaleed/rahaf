@@ -12,6 +12,14 @@ class ExtraImage extends Model
 
     protected $appends = ["image_path"];
 
+    public function product(){
+        return $this->belongsTo(Product::class,'product_id','id');
+    }
+
+    public function color(){
+        return $this->belongsTo(Color::class,'color_id','id');
+    }
+
     public function getImagePathAttribute(){
         return asset("public/uploads/products/".$this->img);
     }

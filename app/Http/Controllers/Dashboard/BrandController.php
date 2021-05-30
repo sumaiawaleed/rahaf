@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Brand;
 use App\Http\Controllers\Controller;
+use App\Product;
+use Elibyy\TCPDF\Facades\TCPDF as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -43,6 +45,32 @@ class BrandController extends Controller
         })->latest('id')->paginate(20);
         $data['url'] = route(env('DASH_URL') . '.brands.index');
         return view('dashboard.brands.index', compact('data'));
+    }
+
+    public function report(Request $request){
+        $data['title'] = __('site.brands');
+        $data['brands'] = Brand::when($request->search, function ($q) use ($request) {
+
+            return $q->where('name','LIKE' ,'%' . $request->search . '%')
+                ->orWhere('a_name','LIKE' ,'%' . $request->search . '%');
+        })->latest('id')->paginate(20);
+        $data['url'] = route(env('DASH_URL') . '.brands.index');
+
+        foreach ($data['brands'] as $b){
+            $b->products = Product::where('brand_id',$b->id)->get()->count();
+        }
+        if($request->pdf){
+            $view = \View::make('dashboard.brands._pdf',compact('data'));
+            $html_content = $view->render();
+            PDF::SetTitle($data['title']);
+            PDF::AddPage();
+            PDF::setRTL(true);
+            PDF::writeHTML($html_content, true, false, true, false, '');
+            // userlist is the name of the PDF downloading
+            PDF::Output(date('Y-m-d', strtotime(now())));
+        }else{
+            return view('dashboard.brands.reports', compact('data','request'));
+        }
     }
 
     public function create()

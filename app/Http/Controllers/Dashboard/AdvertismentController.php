@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Ad;
+use App\Brand;
 use App\Http\Controllers\Controller;
+use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -43,6 +45,7 @@ class AdvertismentController extends Controller
     public function create(Request $request)
     {
         $data['title'] = __('site.add_ads');
+        $data['brands'] = Brand::all();
         $data['url'] = route(env('DASH_URL') . '.ads.store');
         $data['ad_id'] = $request->id ? $request->id : 0;
         return view('dashboard.ads.create', compact('data'));
@@ -57,8 +60,15 @@ class AdvertismentController extends Controller
 
             ), 200);
         } else {
-            $data['type'] = 1;
-            $data['ad_id'] = $request->ad_id;
+            $data['type'] = $request->type;
+            $ad_id = 0;
+            if($request->type == 1){
+                $pro = Product::where('sku',$request->sku)->get()->first();
+                $ad_id = $pro->id;
+            }else if($request->type == 2){
+                $ad_id = $request->brand_id;
+            }
+            $data['ad_id'] = $ad_id;
             if ($request->image) {
 
                 Image::make($request->image)
@@ -70,6 +80,7 @@ class AdvertismentController extends Controller
                 $data['img'] = $request->image->hashName();
 
             }//end of if
+
 
             Ad::create($data);
             return response()->json(array('success' => true), 200);

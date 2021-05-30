@@ -12,11 +12,17 @@
         <tr>
             <td>{{ $ad->id }}</td>
             <td>
-                {{ $ad->type == 1 ? __('site.ad') : __('site.product') }}
+                @if($ad->type == 1)
+                    @lang('site.product')
+                @elseif($ad->type == 2)
+                    @lang('site.brand')
+                @else
+                    @lang('site.ad')
+                @endif
             </td>
             <td>
                 @if($ad->type == 1)
-                    <a href="{{ route(env('DASH_URL').'.products.edit',$ad->id) }}">
+                    <a href="{{ route(env('DASH_URL').'.products.edit',$ad->ad_id) }}">
                         <img width="100" height="100" src="{{ $ad->image_path }}">
                     </a>
                 @else

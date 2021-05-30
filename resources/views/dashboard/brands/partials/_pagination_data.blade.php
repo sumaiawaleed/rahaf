@@ -4,6 +4,7 @@
         <th>#</th>
         <th>@lang('site.name')</th>
         <th>@lang('site.a_name')</th>
+        <th>@lang('site.products')</th>
         <th>@lang('site.icon')</th>
         <th>@lang('site.action')</th>
     </tr>
@@ -22,6 +23,11 @@
                     {{ $brand->a_name }}
                 </a>
             </td>
+
+            <td>
+                    {{ ($brand->products) ? $brand->products : __('site.not_exist') }}
+            </td>
+
             <td><img width="100" height="100" src="{{ $brand->image_path }}"> </td>
             <td>
                 <form action="{{ route(env('DASH_URL').'.brand.active') }}" method="post" class="d-inline">

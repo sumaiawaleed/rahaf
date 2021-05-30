@@ -1,6 +1,6 @@
 <table class="table" id="example">
     <thead>
-    <tr>
+    <tr  @isset($pdf) style="background-color:#f2f2f2" @endisset>
         <th>#</th>
         <th>sku</th>
         <th>@lang('site.name')</th>
@@ -11,7 +11,7 @@
     </thead>
     <tbody>
     @foreach($data['products'] as $index=>$product)
-        <tr>
+        <tr @isset($pdf) style="height: 150px; background-color:{{ ($index% 2 == 0) ? "#fff" : "#f2f2f2" }}" @endisset>
             <td>{{ $product->id }}</td>
             <td>{{ $product->sku }}</td>
             <td>
