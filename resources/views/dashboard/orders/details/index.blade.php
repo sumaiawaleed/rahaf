@@ -50,7 +50,9 @@
                                             <address>
                                                 <b>@lang('site.to') :</b> <a
                                                     href="{{ route(env('DASH_URL').'.customers.show',$data['order']->user_id) }}">
-                                                    {{ $data['customer']->name }}</a>
+                                                    {{ $data['customer']->name }}
+                                                 <span dir="ltr">({{ $data['customer']->phone }})</span>
+                                                </a>
                                             </address>
                                             <address>
                                                 <b>@lang('site.address') :</b> {{ $data['order']->user_address }}
@@ -153,7 +155,7 @@
                                                             </td>
                                                             <td>{{ number_format($d->price) }}</td>
                                                             <td>{{ $d->quantity }}</td>
-                                                            <td>{{ ($d->sub_quntity) ? $d->sub_quntity->name : "" }}</td>
+                                                            <td>{{ ($d->sub_quntity) ? $d->sub_quntity->a_name : "" }}</td>
                                                         </tr>
                                                         @php $total += ($d->price * $d->quantity) + 500; @endphp
                                                     @endforeach

@@ -62,7 +62,7 @@
                         $(win.document.body).find('table')
                             .addClass('compact')
                             .attr('dir', 'rtl')
-                            .css('font-size', 'inherit');
+                            .css('font-size', '20px');
                     }
                 },
                 {

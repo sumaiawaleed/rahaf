@@ -8,7 +8,10 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form id="search_form" action="{{ route(env('DASH_URL').'.products.index') }}">
+            @php
+            $url = isset($search_url) ? $search_url :  route(env('DASH_URL').'.products.index') ;
+            @endphp
+            <form id="search_form" action="{{ $url }}">
 
                 <div class="modal-body">
                     <div class="col-xl-12 col-lg lg-12 col-md-12 col-sm-12 col-12">

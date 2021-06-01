@@ -267,6 +267,14 @@ class OrderController extends Controller
         $order = Order::find($id);
         if ($order) {
             $details = OrderDetails::where('order_id',$order->id);
+            foreach ($details as $detail){
+                if($detail->extra_id == 1){
+                    Product::where('id',$detail->product_id)->update(['quantity' => DB::raw('quantity +'.$detail->quantity)]);
+
+                }else{
+                    ExtraImage::where('product_id',$detail->product_id)->where('color_id',$detail->color_id)->update(['quantity' => DB::raw('quantity +'.$detail->quantity)]);
+                }
+            }
             $details->delete();
         }//end of if
 

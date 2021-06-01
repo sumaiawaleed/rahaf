@@ -91,9 +91,9 @@ class ProductController extends Controller
                 Cache::put('quantity', $request->q, $seconds = 60*24*30);
                 Cache::put('operation', $request->operation, $seconds = 60*24*30);
                 if($request->operation == 2){
-                    return   $q->where('quantity','<',$request->q);
+                    return   $q->where('quantity','<=',$request->q);
                 }else if($request->operation == 3){
-                    return   $q->where('quantity','>',$request->q);
+                    return   $q->where('quantity','>=',$request->q);
                 }else{
                     return $q->where('quantity','=',$request->q);
                 }
@@ -354,9 +354,9 @@ class ProductController extends Controller
                 Cache::put('quantity', $request->q, $seconds = 60*24*30);
                 Cache::put('operation', $request->operation, $seconds = 60*24*30);
                 if($request->operation == 2){
-                    return   $q->where('quantity','<',$request->q);
+                    return   $q->where('quantity','<=',$request->q);
                 }else if($request->operation == 3){
-                    return   $q->where('quantity','>',$request->q);
+                    return   $q->where('quantity','>=',$request->q);
                 }else{
                     return $q->where('quantity','=',$request->q);
                 }

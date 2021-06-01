@@ -85,10 +85,6 @@
 
         @push('scripts')
           @include('layout.dashboard.partials._pagination')
+          @php $search_url = route(env('DASH_URL').'.product.reports'); @endphp
           @include('dashboard.products.partials._search')
-            <style>
-                td,th{
-                    font-size: 16px;
-                }
-            </style>
     @endpush

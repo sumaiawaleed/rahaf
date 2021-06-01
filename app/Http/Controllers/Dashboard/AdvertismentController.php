@@ -75,7 +75,7 @@ class AdvertismentController extends Controller
                     ->resize(300, null, function ($constraint) {
                         $constraint->aspectRatio();
                     })
-                    ->save(public_path('uploads/ads/' . $request->image->hashName()));
+                    ->save(public_path('uploads/advertisements/' . $request->image->hashName()));
 
                 $data['img'] = $request->image->hashName();
 
@@ -92,6 +92,7 @@ class AdvertismentController extends Controller
         $form_data = Ad::find($id);
         $data['title'] = __('site.edit_ads');
         $data['ad_id'] = $form_data->ad_id;
+        $data['brands'] = Brand::all();
 
         $data['url'] = route(env('DASH_URL') . '.ads.update',$form_data->id);
         return view('dashboard.ads.edit', compact('data','form_data'));
@@ -113,7 +114,7 @@ class AdvertismentController extends Controller
 
                 if ($ad->img != '') {
 
-                    Storage::disk('public_uploads')->delete('/ads/' . $ad->img);
+                    Storage::disk('public_uploads')->delete('/advertisements/' . $ad->img);
 
                 }//end of if
 
@@ -121,7 +122,7 @@ class AdvertismentController extends Controller
                     ->resize(300, null, function ($constraint) {
                         $constraint->aspectRatio();
                     })
-                    ->save(public_path('uploads/ads/' . $request->image->hashName()));
+                    ->save(public_path('uploads/advertisements/' . $request->image->hashName()));
 
                 $data['img'] = $request->image->hashName();
 
@@ -137,7 +138,7 @@ class AdvertismentController extends Controller
         $ad = Ad::find($id);
         if ($ad->img != 'default.png') {
 
-            Storage::disk('public_uploads')->delete('/ads/' . $ad->img);
+            Storage::disk('public_uploads')->delete('/advertisements/' . $ad->img);
 
         }//end of if
 

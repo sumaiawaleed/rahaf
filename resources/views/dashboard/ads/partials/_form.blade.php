@@ -9,9 +9,9 @@
         <label for="type_input">@lang('site.type')</label>
         <select name="type" class="form-control" onchange="check_ad(value)">
             <option value="">@lang('site.select')</option>
-            <option value="1">@lang('site.product')</option>
-            <option value="2">@lang('site.brands')</option>
-            <option value="3">@lang('site.ad')</option>
+            <option {{ $type == 1 ? "selected" : "" }} value="1">@lang('site.product')</option>
+            <option {{ $type == 2 ? "selected" : "" }} value="2">@lang('site.brands')</option>
+            <option {{ $type == 3 ? "selected" : "" }} value="3">@lang('site.ad')</option>
         </select>
         <span class="form_error" id="type_error"></span>
     </div>
@@ -19,33 +19,43 @@
 
 <script>
     function check_ad(type) {
-        if(type == 1){
+        if (type == 1) {
             $('.extra_ad').hide();
             $('#product_id_container').show();
-        }else if(type == 2){
+        } else if (type == 2) {
             $('.extra_ad').hide();
             $('#brand_id_container').show();
-        }else{
+        } else {
             $('.extra_ad').hide();
         }
     }
 </script>
 
-<div style="display: none" class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 extra_ad" id="product_id_container">
+<div style="{{ $type != 1 ? "display: none"  : "" }}" class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 extra_ad"
+     id="product_id_container">
     <div class="form-group">
+        @php  $id = 0; @endphp
+        @if($type == 1)
+            @php
+                 $pro = \App\Product::find($ad_id);
+                 $id = $pro->sku;
+            @endphp
+        @endif
         <label for="product_id_input">sku</label>
-        <input type="text" name="sku" id="sku" class="form-control">
+        <input value="{{ $id }}" type="text" name="sku" id="sku" class="form-control">
         <span class="form_error" id="product_id_error"></span>
     </div>
 </div>
 
-<div style="display: none" class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 extra_ad" id="brand_id_container">
+<div style="{{ $type != 2 ? "display: none"  : "" }}" class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 extra_ad"
+     id="brand_id_container">
     <div class="form-group">
         <label for="brand_id_input">@lang('site.brands')</label>
         <select name="brand_id" class="form-control">
             <option>@lang('site.select')</option>
             @foreach($data['brands'] as $brand)
-                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                <option
+                    {{ $ad_id == $brand->id ? "selected" : "" }} value="{{ $brand->id }}">{{ $brand->name }}</option>
             @endforeach
         </select>
         <span class="form_error" id="brand_id_error"></span>
